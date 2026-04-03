@@ -1,0 +1,529 @@
+{
+  "name": "Job Hunter",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -1328,
+        112
+      ],
+      "id": "d3828a45-7736-473f-b839-956cbc7da059",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -656,
+        112
+      ],
+      "id": "245c8f71-0973-4647-a7ee-95102f43ec50",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "url": "https://remotive.com/remote-jobs/feed",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        -1104,
+        16
+      ],
+      "id": "3391e645-f4a1-49cb-bdc6-c7f58dc5d24a",
+      "name": "Remotive RSS",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "https://weworkremotely.com/remote-jobs.rss",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        -1104,
+        208
+      ],
+      "id": "e11206a0-062b-461d-aa36-dcb51b42619b",
+      "name": "WWR RSS"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2037176d-878e-44ab-8328-5b4759643080",
+              "name": "Source",
+              "value": "Remotive",
+              "type": "string"
+            },
+            {
+              "id": "9b412add-b3e5-475a-9a0c-d78e872e8676",
+              "name": "Company",
+              "value": "={{ $json.creator }}",
+              "type": "string"
+            },
+            {
+              "id": "186118d9-476d-4784-bb47-2cd6332a57ab",
+              "name": "Title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "ca1771b3-ec3e-4af5-a3c8-ce994f6a7a93",
+              "name": "Link",
+              "value": "={{ $json.link }}",
+              "type": "string"
+            },
+            {
+              "id": "e294e120-8abe-4981-9650-a68a0df8ff76",
+              "name": "pubDate",
+              "value": "={{ $json.pubDate }}",
+              "type": "string"
+            },
+            {
+              "id": "fac0e2a1-4405-405f-9a50-a0192ab78601",
+              "name": "Description",
+              "value": "={{ $json.contentSnippet }}",
+              "type": "string"
+            },
+            {
+              "id": "74bdd1bd-be3d-4566-b22c-00b22cb1426d",
+              "name": "Global UID",
+              "value": "={{ $json.guid }}",
+              "type": "string"
+            },
+            {
+              "id": "8d05f30f-6730-4c46-9fdd-3e8da56f9947",
+              "name": "Categories",
+              "value": "={{ $json.categories }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -880,
+        16
+      ],
+      "id": "b878e849-60c5-4127-9308-96ed0e9bae4b",
+      "name": "Adding source field"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a383a779-84ac-4d2d-b7bb-a27a1fde8cf3",
+              "name": "Source",
+              "value": "WWR",
+              "type": "string"
+            },
+            {
+              "id": "e4fb31d6-c127-4b31-9eb8-c5c7aa2798ef",
+              "name": "Title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "dc3ba8d1-52d5-4c3d-bbea-0fc19dabdda0",
+              "name": "Link",
+              "value": "={{ $json.link }}",
+              "type": "string"
+            },
+            {
+              "id": "f280a26a-1189-4adf-8587-45e097e71776",
+              "name": "pubDate",
+              "value": "={{ $json.pubDate }}",
+              "type": "string"
+            },
+            {
+              "id": "c2aa0236-0c44-4298-8feb-7a7cb5d1bbd8",
+              "name": "Description",
+              "value": "={{ $json.contentSnippet }}",
+              "type": "string"
+            },
+            {
+              "id": "ec1bb191-d445-4507-8884-393495d94dcd",
+              "name": "Global UID",
+              "value": "={{ $json.guid }}",
+              "type": "string"
+            },
+            {
+              "id": "a6fdb46c-d007-4bfb-83c7-b5d22c75441e",
+              "name": "Categories",
+              "value": "={{ $json.categories }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -880,
+        208
+      ],
+      "id": "9ab025fb-90a9-447d-924a-19b584e444ce",
+      "name": "Adding source field1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "38a13ade-9dd7-46a3-a33d-c93137546251",
+              "name": "Source",
+              "value": "={{ $json.Source }}",
+              "type": "string"
+            },
+            {
+              "id": "81e737cf-0d9d-4ec8-94cf-3701594ad955",
+              "name": "Company",
+              "value": "={{ $json.Company }}",
+              "type": "string"
+            },
+            {
+              "id": "ad91ab43-0aa8-4820-ba0b-6765a8e599aa",
+              "name": "Title",
+              "value": "={{ $json.Title }}",
+              "type": "string"
+            },
+            {
+              "id": "af59f137-61e2-430c-b0be-411994574873",
+              "name": "Link",
+              "value": "={{ $json.Link }}",
+              "type": "string"
+            },
+            {
+              "id": "73f93edc-01e5-4508-bbf5-015ad0706ed0",
+              "name": "pubDate",
+              "value": "={{ $json.pubDate }}",
+              "type": "string"
+            },
+            {
+              "id": "0d3d203c-b8e9-429e-8225-603bf1d1bad6",
+              "name": "Description",
+              "value": "={{ $json.Description }}",
+              "type": "string"
+            },
+            {
+              "id": "e088f6e8-f37e-4d73-a67d-1fe7368b3697",
+              "name": "Global UID",
+              "value": "={{ $json['Global UID'] }}",
+              "type": "string"
+            },
+            {
+              "id": "e24ed683-a10a-45db-a486-a5117e65113f",
+              "name": "Categories",
+              "value": "={{ $json.Categories }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -432,
+        112
+      ],
+      "id": "81ac2d2d-db52-41b0-9ac1-3642a9391819",
+      "name": "Structure"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "59822a92-a8f9-4e9d-9574-84b3fd5adaff",
+              "leftValue": "={{ $json.Categories }}",
+              "rightValue": "=DevOps / Sysadmin",
+              "operator": {
+                "type": "array",
+                "operation": "contains",
+                "rightType": "any"
+              }
+            },
+            {
+              "id": "cf1aca47-c38c-4c49-88d6-c094f9d4cf44",
+              "leftValue": "={{ $json.Categories }}",
+              "rightValue": "Software Development",
+              "operator": {
+                "type": "array",
+                "operation": "contains",
+                "rightType": "any"
+              }
+            },
+            {
+              "id": "daf1937d-11c2-4a65-8760-5c7f7af7e86f",
+              "leftValue": "={{ $json.Categories }}",
+              "rightValue": "AI / ML",
+              "operator": {
+                "type": "array",
+                "operation": "contains",
+                "rightType": "any"
+              }
+            },
+            {
+              "id": "302b4d75-15ac-4270-98ee-04775d8a05a7",
+              "leftValue": "={{ $json.Categories }}",
+              "rightValue": "Full-Stack Programming",
+              "operator": {
+                "type": "array",
+                "operation": "contains",
+                "rightType": "any"
+              }
+            },
+            {
+              "id": "8c1233fa-994f-4358-9906-15fedbb5cd25",
+              "leftValue": "={{ $json.Categories }}",
+              "rightValue": "Front-End Programming",
+              "operator": {
+                "type": "array",
+                "operation": "contains",
+                "rightType": "any"
+              }
+            },
+            {
+              "id": "62bdb4d0-0c5a-4eb6-aca9-98b9e248b67c",
+              "leftValue": "={{ $json.Categories }}",
+              "rightValue": "Back-End Programming",
+              "operator": {
+                "type": "array",
+                "operation": "contains",
+                "rightType": "any"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -208,
+        112
+      ],
+      "id": "58a4e138-aaf8-4ea0-87a3-d73c303c0219",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "content": "False branch intentionally unused (filtered out jobs)"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        64,
+        224
+      ],
+      "id": "1307cac1-5691-4737-9ff1-e52e22099735",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\n// Get persistent storage\nconst staticData = $getWorkflowStaticData('global');\n\n// Initialize the array if it doesn't exist (FIRST RUN)\nif (!staticData.seenGuids) {\n  staticData.seenGuids = [];\n}\n\nconst newItems = [];\n\nfor (const item of items) {\n  const guid = item.json[\"Global UID\"]; \n\n  // If guid not seen before then keep it\n  if (!staticData.seenGuids.includes(guid)) {\n    newItems.push(item);\n\n    // Save it so we don't process it again\n    staticData.seenGuids.push(guid);\n  }\n}\n\n\n// Return only NEW jobs\nreturn newItems;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "3842f35f-d1cc-430c-a3d7-c84b0275afe0",
+      "name": "Remove Duplicates"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\nif (items.length === 0) {\n  return [];\n}\n\nconst MAX_LENGTH = 1800; // safe margin under 2000\nlet messages = [];\nlet currentMessage = \" New IT Jobs:\\n\\n\";\n\nfor (const item of items) {\n  const title = item.json.Title || \"No title\";\n  const link = item.json.Link || \"No link\";\n\n  const jobText = `• ${title}\\n${link}\\n\\n`;\n\n  // If adding this exceeds limit → push current message and start new one\n  if ((currentMessage + jobText).length > MAX_LENGTH) {\n    messages.push({ json: { message: currentMessage } });\n    currentMessage = \"🚀 Continued Jobs:\\n\\n\";\n  }\n\n  currentMessage += jobText;\n}\n\n// Push last message\nif (currentMessage.length > 0) {\n  messages.push({ json: { message: currentMessage } });\n}\n\nreturn messages;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "2d706837-41e5-4194-91b5-ed2e7d55d35c",
+      "name": "Formatter"
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "content": "={{ $json.message }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "1b22f762-a750-4457-b8eb-dec363baa81d",
+      "name": "Discord",
+      "webhookId": "YOUR WEBHOOKID",
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "Y53jrZHDAv9H3vrT",
+          "name": "Discord Webhook account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Remotive RSS",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "WWR RSS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Structure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remotive RSS": {
+      "main": [
+        [
+          {
+            "node": "Adding source field",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WWR RSS": {
+      "main": [
+        [
+          {
+            "node": "Adding source field1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Adding source field": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Adding source field1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Structure": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Remove Duplicates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Duplicates": {
+      "main": [
+        [
+          {
+            "node": "Formatter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formatter": {
+      "main": [
+        [
+          {
+            "node": "Discord",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "04a70ba0-0578-4e45-917e-0218031f0d6d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "40c3d24e50bc15977edf8f8ddcd8af46744d535a8e12d8a55f4bc064e29b8ddc"
+  },
+  "id": "G2Warj3MgRCadSXO",
+  "tags": []
+}
